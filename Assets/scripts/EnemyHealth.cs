@@ -2,25 +2,32 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    public int life = 3;
+    public int health = 3;
     public float knockbackForce = 5f;
 
     private Rigidbody2D rb;
 
-    void Awake() 
+    void Start() 
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
     public void TakeDamage(int damage, Transform attacker) 
     {
-        life -= damage;
-        Vector2 direction = (transform.position -attacker.position).normalized;
+        Debug.Log("Inimigo recebeu dano");
+        health -= damage;
+        Vector2 direction = (transform.position - attacker.position).normalized;
         rb.AddForce (direction * knockbackForce, ForceMode2D.Impulse);
 
-        if (life <= 0) 
+        if (health <= 0) 
         {
-            Destroy(gameObject);
+            Die();
         }
+    }
+
+    public void Die() 
+    {
+        Debug.Log("Inimigo morreu");
+        Destroy(gameObject);
     }
 }
